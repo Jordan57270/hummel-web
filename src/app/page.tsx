@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
+import { HeroGeometric } from '@/components/ui/shape-landing-hero';
 
 /* ─── Animation helpers ─── */
 const fadeUp = {
@@ -33,15 +34,104 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
   );
 }
 
+/* ─── Contact Form ─── */
+
+function ContactForm() {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    const form = e.currentTarget;
+    const data = {
+      nom: (form.elements.namedItem('nom') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      activite: (form.elements.namedItem('activite') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/jecreevotresite@yahoo.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.nom,
+          email: data.email,
+          activite: data.activite || 'Non renseigne',
+          message: data.message || 'Aucun message',
+          _subject: `Nouveau contact HJ_WEB — ${data.nom}`,
+        }),
+      });
+
+      const result = await res.json();
+      if (result.success === 'true') {
+        setStatus('success');
+        form.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="text-center py-10">
+        <div className="w-16 h-16 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center mx-auto mb-6">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 className="text-white font-bold text-xl mb-2">Message envoye !</h3>
+        <p className="text-zinc-400 text-sm">Je vous recontacte sous 24h. Merci pour votre confiance.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form className="space-y-5 text-left" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label htmlFor="nom" className="block text-sm font-medium text-zinc-300 mb-2">Nom</label>
+          <input type="text" id="nom" name="nom" required className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="Votre nom" />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">Email</label>
+          <input type="email" id="email" name="email" required className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="votre@email.com" />
+        </div>
+      </div>
+      <div>
+        <label htmlFor="activite" className="block text-sm font-medium text-zinc-300 mb-2">Votre activite</label>
+        <input type="text" id="activite" name="activite" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="Ex: Plombier, Coach sportif, Restaurant..." />
+      </div>
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">Votre besoin</label>
+        <textarea id="message" name="message" rows={4} className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300 resize-none" placeholder="Decrivez-moi votre projet en quelques mots..." />
+      </div>
+      <button type="submit" disabled={status === 'sending'} className="w-full bg-cyan-500 text-zinc-950 px-7 py-4 rounded-full font-semibold text-base hover:bg-cyan-400 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-15px_rgba(34,211,238,0.3)] active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
+        {status === 'sending' ? 'Envoi en cours...' : 'Envoyer ma demande'}
+        <span className="w-8 h-8 rounded-full bg-zinc-950/20 flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </button>
+      {status === 'error' && (
+        <p className="text-center text-red-400 text-xs">Une erreur est survenue. Reessayez ou contactez-moi directement par email.</p>
+      )}
+      <p className="text-center text-zinc-600 text-xs">Reponse garantie sous 24h. Devis gratuit et sans engagement.</p>
+    </form>
+  );
+}
+
 /* ─── Sections ─── */
 
 function Nav() {
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-5xl">
       <div className="backdrop-blur-2xl bg-white/[0.08] rounded-full border border-white/[0.1] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] px-6 py-3 flex items-center justify-between">
-        <a href="#" className="font-bold text-lg tracking-tight text-white">
-          HJ<span className="text-cyan-400">_WEB</span>
-        </a>
+        <div className="w-[1px]" />
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <a href="#avantages" className="hover:text-white transition-colors duration-300">Avantages</a>
           <a href="#realisations" className="hover:text-white transition-colors duration-300">Realisations</a>
@@ -53,78 +143,6 @@ function Nav() {
   );
 }
 
-function Hero() {
-  return (
-    <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-cyan-500/[0.07] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-cyan-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-[1400px] mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center pt-32 pb-20 lg:py-0">
-        {/* Left: Text */}
-        <div className="max-w-xl">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 bg-cyan-500/10 text-cyan-400 rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold mb-8 border border-cyan-500/20">
-              <span className="relative w-2 h-2 rounded-full bg-cyan-400">
-                <span className="absolute inset-0 rounded-full bg-cyan-400 animate-ping opacity-40" />
-              </span>
-              Disponible pour de nouveaux projets
-            </span>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-[800] tracking-tighter leading-[0.92] text-white mb-6">
-              Votre site web.<br/>
-              <span className="text-cyan-400">Votre vitrine.</span><br/>
-              Mon expertise.
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <p className="text-zinc-400 text-lg leading-relaxed max-w-[50ch] mb-10">
-              Je cree des sites internet sur mesure, modernes et performants pour les entreprises qui veulent se demarquer en ligne. Un investissement, pas une depense.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="flex flex-wrap gap-4">
-              <a href="#avantages" className="inline-flex items-center gap-2 border border-white/10 text-white px-7 py-4 rounded-full font-semibold text-base hover:bg-white/5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98]">
-                En savoir plus
-              </a>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Right: Visual */}
-        <Reveal delay={0.4} className="relative hidden lg:block">
-          <div className="bg-white/[0.06] rounded-[2rem] p-1.5 border border-white/[0.1]">
-            <div className="bg-zinc-800/60 rounded-[calc(2rem-0.375rem)] overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)]">
-              {/* Browser mockup */}
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-white/10" />
-                  <div className="w-3 h-3 rounded-full bg-white/10" />
-                  <div className="w-3 h-3 rounded-full bg-white/10" />
-                </div>
-                <div className="flex-1 mx-3 bg-white/5 rounded-lg px-3 py-1.5 text-xs text-zinc-500 font-mono">
-                  votre-entreprise.fr
-                </div>
-              </div>
-              <Image
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
-                alt="Exemple de site web professionnel"
-                width={800}
-                height={500}
-                className="w-full h-[400px] object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
 
 function Avantages() {
   const avantages = [
@@ -425,33 +443,7 @@ function Contact() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <form className="space-y-5 text-left" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <label htmlFor="nom" className="block text-sm font-medium text-zinc-300 mb-2">Nom</label>
-                <input type="text" id="nom" name="nom" required className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="Votre nom" />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">Email</label>
-                <input type="email" id="email" name="email" required className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="votre@email.com" />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="activite" className="block text-sm font-medium text-zinc-300 mb-2">Votre activite</label>
-              <input type="text" id="activite" name="activite" className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300" placeholder="Ex: Plombier, Coach sportif, Restaurant..." />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">Votre besoin</label>
-              <textarea id="message" name="message" rows={4} className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all duration-300 resize-none" placeholder="Decrivez-moi votre projet en quelques mots..." />
-            </div>
-            <button type="submit" className="w-full bg-cyan-500 text-zinc-950 px-7 py-4 rounded-full font-semibold text-base hover:bg-cyan-400 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-15px_rgba(34,211,238,0.3)] active:scale-[0.98] flex items-center justify-center gap-3">
-              Envoyer ma demande
-              <span className="w-8 h-8 rounded-full bg-zinc-950/20 flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </button>
-            <p className="text-center text-zinc-600 text-xs">Reponse garantie sous 24h. Devis gratuit et sans engagement.</p>
-          </form>
+          <ContactForm />
         </Reveal>
       </div>
     </section>
@@ -462,9 +454,7 @@ function Footer() {
   return (
     <footer className="py-12 px-6 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="font-bold text-lg tracking-tight text-white">
-          HJ<span className="text-cyan-400">_WEB</span>
-        </div>
+        <div className="w-[1px]" />
         <div className="text-zinc-600 text-xs">
           2024 HJ_WEB — Jordan Hummel. Tous droits reserves.
         </div>
@@ -483,7 +473,16 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Nav />
-      <Hero />
+      <HeroGeometric
+        badge="Disponible pour de nouveaux projets"
+        title1="Votre site web."
+        title2="Votre vitrine."
+        description="Je cree des sites internet sur mesure, modernes et performants pour les entreprises qui veulent se demarquer en ligne. Un investissement, pas une depense."
+      >
+        <a href="#avantages" className="inline-flex items-center gap-2 border border-white/10 text-white px-7 py-4 rounded-full font-semibold text-base hover:bg-white/5 transition-all duration-500 active:scale-[0.98]">
+          En savoir plus
+        </a>
+      </HeroGeometric>
       <Avantages />
       <Realisations />
       <Processus />
