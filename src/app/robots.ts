@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://hjweb.fr/sitemap.xml",
+    sitemap: "https://jecreevotresite.fr/sitemap.xml",
   };
 }

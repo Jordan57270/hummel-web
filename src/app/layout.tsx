@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Jordan Hummel" }],
   creator: "Jordan Hummel",
-  metadataBase: new URL("https://hjweb.fr"),
+  metadataBase: new URL("https://jecreevotresite.fr"),
   alternates: {
     canonical: "/",
   },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "HJ_WEB — Votre site internet professionnel a 250€",
     description:
       "Sites internet sur mesure, modernes et performants. Design professionnel, responsive, optimise pour Google. Livraison sous 7 jours.",
-    url: "https://hjweb.fr",
+    url: "https://jecreevotresite.fr",
     siteName: "HJ_WEB",
     locale: "fr_FR",
     type: "website",
@@ -82,7 +82,7 @@ export default function RootLayout({
               name: "HJ_WEB",
               description:
                 "Creation de sites internet professionnels sur mesure a partir de 250€",
-              url: "https://hjweb.fr",
+              url: "https://jecreevotresite.fr",
               founder: {
                 "@type": "Person",
                 name: "Jordan Hummel",
