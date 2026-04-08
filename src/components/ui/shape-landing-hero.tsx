@@ -84,14 +84,14 @@ function HeroGeometric({
     children?: React.ReactNode;
 }) {
     const fadeUpVariants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 30 } as const,
         visible: (i: number) => ({
             opacity: 1,
             y: 0,
             transition: {
                 duration: 1,
                 delay: 0.5 + i * 0.2,
-                ease: [0.25, 0.4, 0.25, 1],
+                ease: [0.25, 0.4, 0.25, 1] as const,
             },
         }),
     };
