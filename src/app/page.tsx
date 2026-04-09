@@ -63,7 +63,7 @@ function ContactForm() {
           email: data.email,
           activite: data.activite || 'Non renseigne',
           message: data.message || 'Aucun message',
-          _subject: `Nouveau contact HJ_WEB — ${data.nom}`,
+          _subject: `Nouveau contact jecreevotresite.fr — ${data.nom}`,
         }),
       });
 
@@ -456,7 +456,7 @@ function Footer() {
       <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="w-[1px]" />
         <div className="text-zinc-600 text-xs">
-          2024 HJ_WEB — Jordan Hummel. Tous droits reserves.
+          2024 jecreevotresite.fr — Jordan Hummel. Tous droits reserves.
         </div>
       </div>
     </footer>

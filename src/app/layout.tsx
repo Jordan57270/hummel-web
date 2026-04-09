@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HJ_WEB — Creation de sites internet professionnels | 250€",
+  title: "jecreevotresite.fr — Creation de sites internet professionnels | 250€",
   description:
     "Jordan Hummel cree votre site internet professionnel sur mesure a partir de 250€. Design moderne, responsive, optimise SEO. Livraison sous 7 jours. Devis gratuit.",
   keywords: [
@@ -35,17 +35,17 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "HJ_WEB — Votre site internet professionnel a 250€",
+    title: "jecreevotresite.fr — Votre site internet professionnel a 250€",
     description:
       "Sites internet sur mesure, modernes et performants. Design professionnel, responsive, optimise pour Google. Livraison sous 7 jours.",
     url: "https://jecreevotresite.fr",
-    siteName: "HJ_WEB",
+    siteName: "jecreevotresite.fr",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HJ_WEB — Votre site internet professionnel a 250€",
+    title: "jecreevotresite.fr — Votre site internet professionnel a 250€",
     description:
       "Sites internet sur mesure, modernes et performants. Design professionnel, responsive, optimise pour Google.",
   },
@@ -79,7 +79,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              name: "HJ_WEB",
+              name: "jecreevotresite.fr",
               description:
                 "Creation de sites internet professionnels sur mesure a partir de 250€",
               url: "https://jecreevotresite.fr",

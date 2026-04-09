@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         email: email,
         activite: activite || 'Non renseigne',
         message: message || 'Aucun message',
-        _subject: `Nouveau contact HJ_WEB — ${nom}`,
+        _subject: `Nouveau contact jecreevotresite.fr — ${nom}`,
       }),
     });
 
