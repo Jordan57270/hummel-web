@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { HeroGeometric } from '@/components/ui/shape-landing-hero';
+import { Logo } from '@/components/ui/logo';
 
 /* ─── Animation helpers ─── */
 const fadeUp = {
@@ -131,7 +132,9 @@ function Nav() {
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-5xl">
       <div className="backdrop-blur-2xl bg-white/[0.08] rounded-full border border-white/[0.1] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] px-6 py-3 flex items-center justify-between">
-        <div className="w-[1px]" />
+        <a href="#" aria-label="jecreevotresite.fr" className="flex items-center">
+          <Logo className="h-7 w-auto" />
+        </a>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <a href="#avantages" className="hover:text-white transition-colors duration-300">Avantages</a>
           <a href="#realisations" className="hover:text-white transition-colors duration-300">Realisations</a>
@@ -454,7 +457,7 @@ function Footer() {
   return (
     <footer className="py-12 px-6 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="w-[1px]" />
+        <Logo className="h-8 w-auto" />
         <div className="text-zinc-600 text-xs">
           2024 jecreevotresite.fr — Jordan Hummel. Tous droits reserves.
         </div>
