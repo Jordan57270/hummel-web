@@ -39,10 +39,12 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
 
 function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorDetail, setErrorDetail] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('sending');
+    setErrorDetail('');
 
     const form = e.currentTarget;
     const data = {
@@ -69,13 +71,23 @@ function ContactForm() {
       });
 
       const result = await res.json();
-      if (result.success === 'true') {
+      // FormSubmit peut renvoyer success en boolean (true) ou en string ("true")
+      const isSuccess =
+        result.success === true ||
+        result.success === 'true' ||
+        res.ok;
+
+      if (isSuccess) {
         setStatus('success');
         form.reset();
       } else {
+        console.error('FormSubmit response:', result);
+        setErrorDetail(result?.message || 'Reponse inattendue du serveur');
         setStatus('error');
       }
-    } catch {
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setErrorDetail(err instanceof Error ? err.message : 'Erreur reseau');
       setStatus('error');
     }
   };
@@ -119,7 +131,12 @@ function ContactForm() {
         </span>
       </button>
       {status === 'error' && (
-        <p className="text-center text-red-400 text-xs">Une erreur est survenue. Reessayez ou contactez-moi directement par email.</p>
+        <div className="text-center">
+          <p className="text-red-400 text-xs">Une erreur est survenue. Reessayez ou contactez-moi directement par email.</p>
+          {errorDetail && (
+            <p className="text-red-400/60 text-[10px] mt-1">Detail : {errorDetail}</p>
+          )}
+        </div>
       )}
       <p className="text-center text-zinc-600 text-xs">Reponse garantie sous 24h. Devis gratuit et sans engagement.</p>
     </form>
