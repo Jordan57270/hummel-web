@@ -470,13 +470,67 @@ function Contact() {
   );
 }
 
+function ZoneIntervention() {
+  const villes = [
+    'Uckange', 'Thionville', 'Hayange', 'Florange', 'Yutz', 'Fameck',
+    'Metz', 'Algrange', 'Moyeuvre-Grande', 'Rombas', 'Amneville', 'Hagondange',
+    'Luxembourg', 'Longwy', 'Briey', 'Bouzonville',
+  ];
+
+  return (
+    <section id="zone" className="py-32 px-6 border-t border-white/5">
+      <div className="max-w-[1100px] mx-auto">
+        <Reveal>
+          <div className="text-center mb-16">
+            <div className="inline-block text-xs uppercase tracking-[0.2em] text-cyan-400/70 mb-4 font-semibold">
+              Zone d'intervention
+            </div>
+            <h2 className="text-white font-extrabold text-4xl md:text-5xl leading-tight mb-6">
+              Base a Uckange,
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-500">
+                au service de toute la Moselle
+              </span>
+            </h2>
+            <p className="text-zinc-400 text-base leading-relaxed max-w-[60ch] mx-auto">
+              Je cree des sites internet professionnels pour les entreprises, artisans et commercants de Moselle, du Grand Est et du Luxembourg. Rencontre possible sur place ou a distance.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {villes.map((ville) => (
+              <span
+                key={ville}
+                className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-5 py-2.5 text-zinc-300 text-sm font-medium hover:bg-white/[0.08] hover:border-cyan-500/30 hover:text-white transition-all duration-300"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                {ville}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="text-center">
+            <p className="text-zinc-500 text-sm">
+              Uckange · 57270 · Moselle · Grand Est · Accompagnement en presentiel ou a distance partout en France
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="py-12 px-6 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <Logo className="h-8 w-auto" />
-        <div className="text-zinc-600 text-xs">
-          2024 jecreevotresite.fr — Jordan Hummel. Tous droits reserves.
+        <div className="text-zinc-600 text-xs text-center md:text-right">
+          2024 jecreevotresite.fr — Jordan Hummel, Uckange (57270). Tous droits reserves.
         </div>
       </div>
     </footer>
@@ -494,10 +548,10 @@ export default function Home() {
     <div className="min-h-screen">
       <Nav />
       <HeroGeometric
-        badge="Disponible pour de nouveaux projets"
-        title1="Votre site web."
-        title2="Votre vitrine."
-        description="Je cree des sites internet sur mesure, modernes et performants pour les entreprises qui veulent se demarquer en ligne. Un investissement, pas une depense."
+        badge="Freelance web a Uckange (57) — Disponible"
+        title1="Creation de sites"
+        title2="Thionville & Metz"
+        description="Base a Uckange, je cree des sites internet sur mesure pour les entreprises de Moselle, du Grand Est et du Luxembourg. Modernes, performants, a partir de 250€. Livraison sous 7 jours."
       >
         <a href="#avantages" className="inline-flex items-center gap-2 border border-white/10 text-white px-7 py-4 rounded-full font-semibold text-base hover:bg-white/5 transition-all duration-500 active:scale-[0.98]">
           En savoir plus
@@ -508,6 +562,7 @@ export default function Home() {
       <Processus />
       <Tarif />
       <Contact />
+      <ZoneIntervention />
       <Footer />
     </div>
   );

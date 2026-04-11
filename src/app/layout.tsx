@@ -13,19 +13,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "jecreevotresite.fr — Creation de sites internet professionnels | 250€",
+  title: "Creation site internet Thionville, Metz, Moselle — 250€ | jecreevotresite.fr",
   description:
-    "Jordan Hummel cree votre site internet professionnel sur mesure a partir de 250€. Design moderne, responsive, optimise SEO. Livraison sous 7 jours. Devis gratuit.",
+    "Creation de sites internet a Uckange, Thionville, Metz et dans toute la Moselle a partir de 250€. Jordan Hummel, freelance web en Lorraine. Design moderne, responsive, optimise SEO. Livraison sous 7 jours. Devis gratuit.",
   keywords: [
-    "creation site internet",
+    "creation site internet Uckange",
+    "creation site internet Thionville",
+    "creation site internet Metz",
+    "creation site internet Moselle",
+    "creation site internet Hayange",
+    "creation site internet Florange",
+    "creation site internet Yutz",
+    "creation site internet vallee de la Fensch",
+    "site internet pas cher Moselle",
+    "freelance web Thionville",
+    "freelance web Metz",
+    "agence web Moselle",
+    "site vitrine Lorraine",
+    "creation site internet Luxembourg",
     "site web professionnel",
-    "creation site web",
-    "site vitrine",
-    "site internet pas cher",
-    "web design",
-    "site responsive",
-    "site internet entreprise",
-    "freelance web",
+    "site vitrine entreprise",
     "Jordan Hummel",
   ],
   authors: [{ name: "Jordan Hummel" }],
@@ -35,9 +42,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "jecreevotresite.fr — Votre site internet professionnel a 250€",
+    title: "Creation site internet Thionville, Metz, Moselle — 250€ | jecreevotresite.fr",
     description:
-      "Sites internet sur mesure, modernes et performants. Design professionnel, responsive, optimise pour Google. Livraison sous 7 jours.",
+      "Creation de sites internet a Uckange, Thionville, Metz et dans toute la Moselle a partir de 250€. Design moderne, responsive, optimise SEO. Livraison sous 7 jours.",
     url: "https://jecreevotresite.fr",
     siteName: "jecreevotresite.fr",
     locale: "fr_FR",
@@ -45,9 +52,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "jecreevotresite.fr — Votre site internet professionnel a 250€",
+    title: "Creation site internet Thionville, Metz, Moselle — 250€",
     description:
-      "Sites internet sur mesure, modernes et performants. Design professionnel, responsive, optimise pour Google.",
+      "Sites internet sur mesure en Moselle et Grand Est. Design professionnel, responsive, optimise pour Google. A partir de 250€.",
   },
   robots: {
     index: true,
@@ -78,28 +85,56 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "jecreevotresite.fr",
+              "@type": "LocalBusiness",
+              "@id": "https://jecreevotresite.fr/#business",
+              name: "jecreevotresite.fr — Jordan Hummel",
               description:
-                "Creation de sites internet professionnels sur mesure a partir de 250€",
+                "Creation de sites internet professionnels a Uckange, Thionville, Metz et dans toute la Moselle a partir de 250€. Sites sur mesure, responsives, optimises SEO.",
               url: "https://jecreevotresite.fr",
+              image: "https://jecreevotresite.fr/og-image.png",
+              priceRange: "€€",
               founder: {
                 "@type": "Person",
                 name: "Jordan Hummel",
               },
-              priceRange: "A partir de 250€",
-              serviceType: "Creation de sites internet",
-              areaServed: {
-                "@type": "Country",
-                name: "France",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Uckange",
+                postalCode: "57270",
+                addressRegion: "Moselle",
+                addressCountry: "FR",
               },
-              offers: {
-                "@type": "Offer",
-                name: "Site internet complet",
-                price: "250",
-                priceCurrency: "EUR",
-                description:
-                  "Design sur mesure, responsive, optimise SEO, formulaire de contact, hebergement 1 an inclus, nom de domaine inclus, livraison sous 7 jours",
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 49.3125,
+                longitude: 6.15,
+              },
+              areaServed: [
+                { "@type": "City", name: "Uckange" },
+                { "@type": "City", name: "Thionville" },
+                { "@type": "City", name: "Hayange" },
+                { "@type": "City", name: "Florange" },
+                { "@type": "City", name: "Yutz" },
+                { "@type": "City", name: "Fameck" },
+                { "@type": "City", name: "Metz" },
+                { "@type": "City", name: "Luxembourg" },
+                { "@type": "AdministrativeArea", name: "Moselle" },
+                { "@type": "AdministrativeArea", name: "Grand Est" },
+              ],
+              serviceType: "Creation de sites internet",
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Services de creation de sites web",
+                itemListElement: [
+                  {
+                    "@type": "Offer",
+                    name: "Site internet complet",
+                    price: "250",
+                    priceCurrency: "EUR",
+                    description:
+                      "Design sur mesure, responsive, optimise SEO, formulaire de contact, hebergement 1 an inclus, nom de domaine inclus, livraison sous 7 jours",
+                  },
+                ],
               },
             }),
           }}
