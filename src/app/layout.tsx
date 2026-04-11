@@ -93,6 +93,8 @@ export default function RootLayout({
               url: "https://jecreevotresite.fr",
               image: "https://jecreevotresite.fr/og-image.png",
               priceRange: "€€",
+              telephone: "+33760908951",
+              email: "jecreevotresite@yahoo.com",
               founder: {
                 "@type": "Person",
                 name: "Jordan Hummel",
